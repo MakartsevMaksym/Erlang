@@ -9,21 +9,26 @@
 -module(side_effects).
 -author("makst").
 %% API
--export([print_nums/1, print_nums_2/1]).
+-export([show_all/1, show_odd/1, show_even/1]).
 
-print_nums(Num) when Num >= 1 ->
-  io:fwrite("Number: ~p~n", [Num]),
-  print_nums(Num - 1);
-print_nums(0) -> {ok}.
+show_all(N) -> print(1, N, fun(_) -> true end).
+show_odd(N) -> print(1, N, fun(X) -> X rem 2 =/= 0 end).
+show_even(N) -> print(1, N, fun(X) -> X rem 2 =:= 0 end).
 
-print_nums_2(0) -> {ok};
-print_nums_2(Num) ->
-  case Num rem 2 of
-    0 ->
-      print_nums_2(Num - 1);
-    _ ->
-      io:fwrite("Number: ~p~n", [Num]),
-      print_nums_2(Num - 1)
+
+print(To, To, Fun) ->
+  print_if(To, Fun),
+  {ok};
+print(From, To, Fun) ->
+  print_if(From, Fun),
+  print(From + 1, To, Fun).
+
+
+print_if(X, Fun) ->
+  Var = Fun(X),
+  if
+    Var -> io:fwrite("Number: ~p~n", [X]);
+    true -> false
   end.
 
 
