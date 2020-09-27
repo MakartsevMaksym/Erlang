@@ -1,14 +1,5 @@
-%%%-------------------------------------------------------------------
-%%% @author makst
-%%% @copyright (C) 2020, <COMPANY>
-%%% @doc
-%%%
-%%% @end
-%%% Created : 27. сент. 2020 17:59
-%%%-------------------------------------------------------------------
 -module(side_effects).
 -author("makst").
-%% API
 -export([show_all/1, show_odd/1, show_even/1]).
 
 show_all(N) -> print(1, N, fun(_) -> true end).
