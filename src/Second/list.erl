@@ -1,6 +1,6 @@
 -module(list).
 -author("makst").
--export([create/1, reverse_create/1, filter/2, reverse/1]).
+-export([create/1, reverse_create/1, filter/2, reverse/1, rev/1]).
 
 create(N) -> create(N, []).
 create(0, Res) -> Res;
@@ -19,3 +19,5 @@ reverse([]) -> [];
 reverse(List) ->
   [H | T] = List,
   reverse(T) ++ [H].
+
+rev(List) ->  io:write(reverse(List)).
