@@ -1,6 +1,6 @@
 -module(list).
 -author("makst").
--export([create/1, reverse_create/1, filter/2, reverse/1, rev/1]).
+-export([create/1, reverse_create/1, filter/2, reverse/1, concatenate/1, flatten/1]).
 
 create(N) -> create(N, []).
 create(0, Res) -> Res;
@@ -20,4 +20,17 @@ reverse(List) ->
   [H | T] = List,
   reverse(T) ++ [H].
 
-rev(List) ->  io:write(reverse(List)).
+concatenate(Lst) -> concatenate(Lst, []).
+concatenate([], List) -> List;
+concatenate([H|T], List) -> concatenate(T, List ++ H).
+
+flatten_x(List) -> flatten_x(List, []).
+flatten_x([], List) -> List;
+flatten_x([H|T], List) ->
+  if
+    is_list(H) ->
+      flatten_x(T, flatten_x(H) ++ List);
+    true ->
+      flatten_x(T, [H] ++ List)
+  end.
+flatten(List) -> reverse(flatten_x(List)).
